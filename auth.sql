@@ -43,9 +43,8 @@ create table Adm_Group_Func_Map (
 	constraint A_GF_PK primary key (group_id, func_id)
 );
 
-insert into Adm_User values ('admin', '123456', '系統管理者', 'gauciouss@gmail.com', '', '', '', now(), null, 1, 1);
+insert into Adm_User values ('admin', '123456', '系統管理者', 'gauciouss@gmail.com', '', '', '', 'GRP0000001', now(), null, 1, 1);
 insert into Adm_Group values ('GRP0000001', '系統管理者', now(), null, 1, 1);
-insert into Adm_Group_User_Map values ('GRP0000001', 'admin');
 insert into Adm_Func values ('FUN0000001', '權限管理', '', 1, '', 1, now(), null, 1, 1);
 insert into Adm_Func values ('FUN0000002', '使用者管理', 'FUN0000001', 0, 'auth/user/edit', 1, now(), null, 1, 1);
 insert into Adm_Func values ('FUN0000003', '群組管理', 'FUN0000001', 0, 'auth/grp/edit', 2, now(), null, 1, 1);

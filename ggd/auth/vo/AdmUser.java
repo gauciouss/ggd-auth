@@ -9,13 +9,14 @@ import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.FetchType;
 import javax.persistence.Id;
+import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
 import javax.persistence.OneToOne;
 import javax.persistence.Table;
 import javax.persistence.Transient;
 
 @Entity
-@Table(name = "Adm_User")
+@Table(name = "adm_user")
 public class AdmUser implements Serializable {
 
 	private static final long serialVersionUID = 5669246502073898207L;
@@ -52,6 +53,7 @@ public class AdmUser implements Serializable {
 	private boolean isApproved;
 	
 	@ManyToOne(fetch = FetchType.EAGER, cascade = CascadeType.ALL)
+	@JoinColumn(name = "group_id")
 	private AdmGroup group;
 	
 	@Transient
@@ -75,6 +77,128 @@ public class AdmUser implements Serializable {
 		this.isEnabled = isEnabled;
 		this.isApproved = isApproved;
 		this.group = group;
+	}
+	
+	
+
+
+	public String getAccount() {
+		return account;
+	}
+
+
+	public void setAccount(String account) {
+		this.account = account;
+	}
+
+
+	public String getPwd() {
+		return pwd;
+	}
+
+
+	public void setPwd(String pwd) {
+		this.pwd = pwd;
+	}
+
+
+	public String getEmail() {
+		return email;
+	}
+
+
+	public void setEmail(String email) {
+		this.email = email;
+	}
+
+
+	public String getAddress() {
+		return address;
+	}
+
+
+	public void setAddress(String address) {
+		this.address = address;
+	}
+
+
+	public String getTel() {
+		return tel;
+	}
+
+
+	public void setTel(String tel) {
+		this.tel = tel;
+	}
+
+
+	public String getPhone() {
+		return phone;
+	}
+
+
+	public void setPhone(String phone) {
+		this.phone = phone;
+	}
+
+
+	public Timestamp getCreateDate() {
+		return createDate;
+	}
+
+
+	public void setCreateDate(Timestamp createDate) {
+		this.createDate = createDate;
+	}
+
+
+	public Timestamp getUpdateDate() {
+		return updateDate;
+	}
+
+
+	public void setUpdateDate(Timestamp updateDate) {
+		this.updateDate = updateDate;
+	}
+
+
+	public boolean isEnabled() {
+		return isEnabled;
+	}
+
+
+	public void setEnabled(boolean isEnabled) {
+		this.isEnabled = isEnabled;
+	}
+
+
+	public boolean isApproved() {
+		return isApproved;
+	}
+
+
+	public void setApproved(boolean isApproved) {
+		this.isApproved = isApproved;
+	}
+
+
+	public AdmGroup getGroup() {
+		return group;
+	}
+
+
+	public void setGroup(AdmGroup group) {
+		this.group = group;
+	}
+
+
+	public List<AdmFunc> getFuncs() {
+		return funcs;
+	}
+
+
+	public void setFuncs(List<AdmFunc> funcs) {
+		this.funcs = funcs;
 	}
 
 
@@ -101,8 +225,6 @@ public class AdmUser implements Serializable {
 		builder.append(isEnabled);
 		builder.append(", isApproved=");
 		builder.append(isApproved);
-		builder.append(", group=");
-		builder.append(group);
 		builder.append(", funcs=");
 		builder.append(funcs);
 		builder.append("]");
