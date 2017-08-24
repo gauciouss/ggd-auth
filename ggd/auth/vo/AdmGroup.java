@@ -2,7 +2,6 @@ package ggd.auth.vo;
 
 import java.io.Serializable;
 import java.sql.Timestamp;
-import java.util.List;
 import java.util.Set;
 
 import javax.persistence.CascadeType;
@@ -11,9 +10,10 @@ import javax.persistence.Entity;
 import javax.persistence.FetchType;
 import javax.persistence.Id;
 import javax.persistence.JoinColumn;
+import javax.persistence.JoinTable;
+import javax.persistence.ManyToMany;
 import javax.persistence.OneToMany;
 import javax.persistence.Table;
-import javax.persistence.Transient;
 
 @Entity
 @Table(name = "adm_group")
@@ -40,8 +40,17 @@ public class AdmGroup implements Serializable {
 	@Column(name = "isApproved")
 	private boolean isApproved;
 
-	@Transient
-	private List<AdmFunc> funcs;
+	@ManyToMany(fetch = FetchType.EAGER, cascade = CascadeType.ALL)
+	@JoinTable(
+		name = "Adm_Group_Func_Map", 
+		joinColumns = {
+			@JoinColumn(name = "group_id", nullable = false, updatable = false)
+		}, 
+		inverseJoinColumns = {
+			@JoinColumn(name= "func_id", nullable = false, updatable = false)
+		}
+	)
+	private Set<AdmFunc> funcs;
 
 	@OneToMany(fetch = FetchType.EAGER, cascade = CascadeType.ALL, mappedBy = "group")
 	private Set<AdmUser> users;
@@ -116,11 +125,11 @@ public class AdmGroup implements Serializable {
 		this.users = users;
 	}
 
-	public List<AdmFunc> getFuncs() {
+	public Set<AdmFunc> getFuncs() {
 		return funcs;
 	}
 
-	public void setFuncs(List<AdmFunc> funcs) {
+	public void setFuncs(Set<AdmFunc> funcs) {
 		this.funcs = funcs;
 	}
 
