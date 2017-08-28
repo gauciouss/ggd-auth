@@ -28,7 +28,7 @@ public class AdmGroupDao extends HibernateDao<AdmGroup, String> {
 	
 	public void addNewGroup(String grpName) {
 		Profiler p = new Profiler();
-		log.trace("START: {}.addNewGroup(). grpName: {}", this.getClass(), grpName);
+		log.trace("START: {}.addNewGroup(), grpName: {}", this.getClass(), grpName);
 		super.executeUpateQuery(SQL_ADD_NEW_GROUP, this.getNextId(), grpName);
 		log.info("END: {}.addNewGroup(), grpName: {}, exec TIME: {} ms.", this.getClass(), grpName, p.executeTime());
 	}
@@ -36,15 +36,15 @@ public class AdmGroupDao extends HibernateDao<AdmGroup, String> {
 	
 	public void updateGroupInfo(AdmGroup grp) {
 		Profiler p = new Profiler();
-		log.trace("START: {}.updateGroupInfo(). grp: {}", this.getClass(), grp);
+		log.trace("START: {}.updateGroupInfo(), grp: {}", this.getClass(), grp);
 		super.executeUpateQuery(SQL_UPDATE_GROUP, grp.getGroupName(), grp.getGroupId());
 		log.info("END: {}.updateGroupInfo(), grp: {}, exec TIME: {} ms.", this.getClass(), grp, p.executeTime());
 	}
 	
 	
-	public void enableGroup(String grpId, boolean isEnabled) {
+	public void enable(String grpId, boolean isEnabled) {
 		Profiler p = new Profiler();
-		log.trace("START: {}.enableGroup(). grpId: {}", this.getClass(), grpId);
+		log.trace("START: {}.enableGroup(), grpId: {}", this.getClass(), grpId);
 		if(isEnabled)
 			super.executeUpateQuery(SQL_ENABLE_GROUP, grpId);
 		else
@@ -52,9 +52,9 @@ public class AdmGroupDao extends HibernateDao<AdmGroup, String> {
 		log.info("END: {}.enableGroup(), grpId: {}, exec TIME: {} ms.", this.getClass(), grpId, p.executeTime());
 	}
 	
-	public void approveGroup(String grpId, boolean isApproved) {
+	public void approve(String grpId, boolean isApproved) {
 		Profiler p = new Profiler();
-		log.trace("START: {}.approveGroup(). grpId: {}", this.getClass(), grpId);
+		log.trace("START: {}.approveGroup(), grpId: {}", this.getClass(), grpId);
 		if(isApproved)
 			super.executeUpateQuery(SQL_APPROVED_GROUP, grpId);
 		else

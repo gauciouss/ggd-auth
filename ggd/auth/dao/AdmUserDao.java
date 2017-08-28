@@ -20,7 +20,7 @@ public class AdmUserDao extends HibernateDao<AdmUser, String> {
 	
 	public void enable(String account, boolean isEnabled) {
 		Profiler p = new Profiler();
-		log.trace("START: {}.enable(). grpId: {}", this.getClass(), account);
+		log.trace("START: {}.enable(), grpId: {}", this.getClass(), account);
 		if(isEnabled)
 			super.executeUpateQuery(SQL_ENABLE, account);
 		else
@@ -30,7 +30,7 @@ public class AdmUserDao extends HibernateDao<AdmUser, String> {
 	
 	public void approve(String account, boolean isApproved) {
 		Profiler p = new Profiler();
-		log.trace("START: {}.approve(). account: {}", this.getClass(), account);
+		log.trace("START: {}.approve(), account: {}", this.getClass(), account);
 		if(isApproved)
 			super.executeUpateQuery(SQL_APPROVED, account);
 		else

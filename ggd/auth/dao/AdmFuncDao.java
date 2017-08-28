@@ -9,7 +9,7 @@ import ggd.core.db.HibernateDao;
 
 public class AdmFuncDao extends HibernateDao<AdmFunc, String> {
 
-	private final static Logger log = LoggerFactory.getLogger(AdmUserDao.class);
+	private final static Logger log = LoggerFactory.getLogger(AdmFuncDao.class);
 
 	private static final String SQL_ENABLE = "update Adm_Func set isEnabled = true, isApproved = false where func_id = ?";
 	private static final String SQL_DISABLE = "update Adm_Func set isEnabled = false, isApproved = false where func_id = ?";
@@ -18,7 +18,7 @@ public class AdmFuncDao extends HibernateDao<AdmFunc, String> {
 	
 	public void enable(String funcId, boolean isEnabled) {
 		Profiler p = new Profiler();
-		log.trace("START: {}.enable(). grpId: {}", this.getClass(), funcId);
+		log.trace("START: {}.enable(), grpId: {}", this.getClass(), funcId);
 		if(isEnabled)
 			super.executeUpateQuery(SQL_ENABLE, funcId);
 		else
@@ -28,7 +28,7 @@ public class AdmFuncDao extends HibernateDao<AdmFunc, String> {
 	
 	public void approve(String funcId, boolean isApproved) {
 		Profiler p = new Profiler();
-		log.trace("START: {}.approve(). funcId: {}", this.getClass(), funcId);
+		log.trace("START: {}.approve(), funcId: {}", this.getClass(), funcId);
 		if(isApproved)
 			super.executeUpateQuery(SQL_APPROVED, funcId);
 		else
