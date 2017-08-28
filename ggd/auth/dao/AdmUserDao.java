@@ -13,10 +13,10 @@ public class AdmUserDao extends HibernateDao<AdmUser, String> {
 	
 	private final static Logger log = LoggerFactory.getLogger(AdmUserDao.class);
 
-	private static final String SQL_ENABLE = "update Adm_Group set isEnabled = true, isApproved = false where group_id = ?";
-	private static final String SQL_DISABLE = "update Adm_Group set isEnabled = false, isApproved = false where group_id = ?";
-	private static final String SQL_APPROVED = "update Adm_Group set isApproved = true, isEnabled = true where group_id = ?";
-	private static final String SQL_UNAPPROVED = "update Adm_Group set isApproved = false where group_id = ?";
+	private static final String SQL_ENABLE = "update Adm_User set isEnabled = true, isApproved = false where account = ?";
+	private static final String SQL_DISABLE = "update Adm_User set isEnabled = false, isApproved = false where account = ?";
+	private static final String SQL_APPROVED = "update Adm_User set isApproved = true, isEnabled = true where account = ?";
+	private static final String SQL_UNAPPROVED = "update Adm_User set isApproved = false where account = ?";
 	
 	public void enable(String account, boolean isEnabled) {
 		Profiler p = new Profiler();
