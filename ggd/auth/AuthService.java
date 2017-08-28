@@ -29,22 +29,32 @@ public interface AuthService {
 	/**
 	 * 啟用使用者	
 	 * @param account
-	 * @param isEnable
 	 */
-	public void enableUser(String account, boolean isEnable);
+	public void enableUser(String account);
 	
 	/**
-	 * 允許使用者
+	 * 停用使用者	
 	 * @param account
-	 * @param isApprove
 	 */
-	public void approveUser(String account, boolean isApprove);
+	public void disableUser(String account);
+	
+	/**
+	 * 允許開放使用者
+	 * @param account
+	 */
+	public void approveUser(String account);
+	
+	/**
+	 * 不允許開放使用者
+	 * @param account
+	 */
+	public void unApproveUser(String account);
 	
 	/**
 	 * 新增群組
-	 * @param group
+	 * @param grpName
 	 */
-	public void addGroup(AdmGroup group);
+	public void addGroup(String grpName);
 	
 	/**
 	 * 更新群組資訊
@@ -55,16 +65,26 @@ public interface AuthService {
 	/**
 	 * 啟用群組
 	 * @param grpId
-	 * @param isEnable
 	 */
-	public void enableGroup(String grpId, boolean isEnable);
+	public void enableGroup(String grpId);
 	
 	/**
-	 * 允許群組
+	 * 停用群組
 	 * @param grpId
-	 * @param isApprove
 	 */
-	public void approveGroup(String grpId, boolean isApprove);
+	public void disableGroup(String grpId);
+	
+	/**
+	 * 允許開通群組
+	 * @param grpId
+	 */
+	public void approveGroup(String grpId);
+	
+	/**
+	 * 不允許開通群組
+	 * @param grpId
+	 */
+	public void unApproveGroup(String grpId);
 	
 	/**
 	 * 新增功能
