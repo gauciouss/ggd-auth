@@ -1,9 +1,12 @@
 package ggd.auth;
 
+import org.springframework.transaction.annotation.Transactional;
+
 import ggd.auth.vo.AdmFunc;
 import ggd.auth.vo.AdmGroup;
 import ggd.auth.vo.AdmUser;
 
+@Transactional
 public interface AuthService {
 
 	/**
@@ -11,7 +14,7 @@ public interface AuthService {
 	 * @param account
 	 * @param pwd
 	 * @return
-	 */
+	 */	
 	public AdmUser authenticate(String account, String pwd);
 	
 	/**

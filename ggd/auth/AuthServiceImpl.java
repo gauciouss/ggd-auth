@@ -35,7 +35,8 @@ public class AuthServiceImpl implements AuthService {
 	public AdmUser authenticate(String account, String pwd) {
 		Profiler p = new Profiler();
 		log.trace("START: {}.authenticate(), account: {}, pwd: {} ", this.getClass(), account, pwd);
-		AdmUser user = admUserDao.findById(account);
+		AdmUser user = admUserDao.getApprovedUser(account);
+		log.debug("authenticate user: {}", user);
 		if(user != null && !StringUtil.isEmptyString(pwd) && pwd.equals(user.getPwd())) {
 			log.info("END: {}.authenticate(), account: {}, pwd: {}, exec TIME: {} ms.", this.getClass(), account, pwd, p.executeTime());
 			return user;

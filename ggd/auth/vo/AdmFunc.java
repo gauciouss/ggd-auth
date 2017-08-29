@@ -27,7 +27,7 @@ public class AdmFunc implements Serializable {
 	@Column(name = "func_name")
 	private String funcName;
 	
-	@ManyToOne(cascade = CascadeType.ALL, fetch = FetchType.EAGER)
+	@ManyToOne(cascade = CascadeType.ALL, fetch = FetchType.LAZY)
 	@JoinColumn(name = "parent_id")
 	private AdmFunc parent;
 	
