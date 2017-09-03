@@ -2,6 +2,7 @@ package ggd.auth;
 
 import java.sql.Timestamp;
 import java.util.Calendar;
+import java.util.List;
 
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -11,7 +12,6 @@ import org.springframework.stereotype.Service;
 
 import baytony.util.Profiler;
 import baytony.util.StringUtil;
-import ggd.auth.dao.AdmFuncDao;
 import ggd.auth.dao.AdmGroupDao;
 import ggd.auth.dao.AdmUserDao;
 import ggd.auth.vo.AdmFunc;
@@ -38,10 +38,38 @@ public class AuthServiceImpl implements AuthService {
 		AdmUser user = admUserDao.getApprovedUser(account);
 		log.debug("authenticate user: {}", user);
 		if(user != null && !StringUtil.isEmptyString(pwd) && pwd.equals(user.getPwd())) {
+			
 			log.info("END: {}.authenticate(), account: {}, pwd: {}, exec TIME: {} ms.", this.getClass(), account, pwd, p.executeTime());
 			return user;
 		}
 		return null;
+	}
+	
+	@Override
+	public List<AdmUser> findUsers(int page, int row) {
+		Profiler p = new Profiler();
+		log.trace("START: {}.findUsers(), page: {}, row: {}", this.getClass(), page, row);
+		List<AdmUser> users = admUserDao.findUsers(page, row);
+		log.info("END: {}.findUsers(), users: {}, exec TIME: {} ms.", this.getClass(), users, p.executeTime());
+		return users;
+	}
+	
+	@Override
+	public List<AdmUser> findUsers(String value) {
+		Profiler p = new Profiler();
+		log.trace("START: {}.findUsers(), value: {}", this.getClass(), value);
+		List<AdmUser> users = admUserDao.findUsers(value);
+		log.info("END: {}.findUsers(), users: {}, exec TIME: {} ms.", this.getClass(), users, p.executeTime());
+		return users;
+	}
+	
+	@Override
+	public AdmUser findUserById(String id) {
+		Profiler p = new Profiler();
+		log.trace("START: {}.findUserById(), account: {}", this.getClass(), id);
+		AdmUser user = admUserDao.findById(id);
+		log.info("END: {}.findUserById(), user: {}, exec TIME: {} ms.", this.getClass(), user, p.executeTime());
+		return user;
 	}
 
 	@Override
@@ -52,13 +80,35 @@ public class AuthServiceImpl implements AuthService {
 		log.info("END: {}.addUser(), user: {}, exec TIME: {} ms.", this.getClass(), user, p.executeTime());
 	}
 
-	@Override
+	/*@Override
 	public void updateUser(AdmUser user) {
 		Profiler p = new Profiler();
 		log.trace("START: {}.updateUser(), user: {}", this.getClass(), user);
 		user.setUpdateDate(new Timestamp(Calendar.getInstance().getTimeInMillis()));		
 		admUserDao.update(user);
 		log.info("END: {}.updateUser(), user: {}, exec TIME: {} ms.", this.getClass(), user, p.executeTime());
+	}*/
+	
+	@Override
+	public void updateUser(String account, String password, String name, String email, String address, String tel,
+			String phone, String groupId) {
+		Profiler p = new Profiler();
+		log.trace("START: {}.updateUser(), account: {}, password: {}, name: {}, email: {}, address: {}, tel: {}, phone: {}, groupId: {}", this.getClass(), account, password, name, email, address, tel, phone, groupId);
+		AdmUser user = admUserDao.findById(account);
+		user.setPwd(password);
+		user.setAddress(address);
+		user.setApproved(false);
+		user.setEnabled(false);
+		user.setEmail(email);
+		user.setName(name);
+		user.setPhone(phone);
+		user.setTel(tel);
+		if(!groupId.equals(user.getGroup().getGroupId())) {
+			AdmGroup group = admGroupDao.findById(groupId);
+			user.setGroup(group);
+		}
+		admUserDao.update(user);
+		log.info("END: {}.updateUser(), update user: {}, exec TIME: {} ms.", this.getClass(), user, p.executeTime());
 	}
 
 	@Override
@@ -139,6 +189,15 @@ public class AuthServiceImpl implements AuthService {
 		log.trace("START: {}.unApproveGroup(), grpId: {}", this.getClass(), grpId);
 		admGroupDao.approve(grpId, false);
 		log.info("END: {}.unApproveGroup(), grpId: {}, exec TIME: {} ms.", this.getClass(), grpId, p.executeTime());
+	}
+	
+	@Override
+	public List<AdmGroup> findAllGroup(boolean isEnabled, boolean isApproved) {
+		Profiler p = new Profiler();
+		log.trace("START: {}.findAllGroup(), isEnabled: {}, isApproved: {}", this.getClass(), isEnabled, isApproved);
+		List<AdmGroup> groups = (List<AdmGroup>) admGroupDao.findAll(isEnabled, isApproved);
+		log.info("END: {}.findAllGroup(), isEnabled: {}, isApproved: {}, groups: {}, exec TIME: {} ms.", this.getClass(), isEnabled, isApproved, groups, p.executeTime());
+		return groups;
 	}
 
 	@Override

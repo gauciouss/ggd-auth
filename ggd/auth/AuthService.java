@@ -1,5 +1,7 @@
 package ggd.auth;
 
+import java.util.List;
+
 import org.springframework.transaction.annotation.Transactional;
 
 import ggd.auth.vo.AdmFunc;
@@ -17,6 +19,29 @@ public interface AuthService {
 	 */	
 	public AdmUser authenticate(String account, String pwd);
 	
+	
+	/**
+	 * 查詢使用者
+	 * @param page
+	 * @param row
+	 * @return
+	 */
+	public List<AdmUser> findUsers(int page, int row); 
+	
+	/**
+	 * 查詢使用者
+	 * @param id
+	 * @return
+	 */
+	public AdmUser findUserById(String id);
+	
+	/**
+	 * 查詢使用者
+	 * @param value account or name
+	 * @return
+	 */
+	public List<AdmUser> findUsers(String value);
+	
 	/**
 	 * 新增使用者
 	 * @param user
@@ -25,9 +50,16 @@ public interface AuthService {
 	
 	/**
 	 * 更新使用者
-	 * @param user
+	 * @param account
+	 * @param password
+	 * @param name
+	 * @param email
+	 * @param address
+	 * @param tel
+	 * @param phone
+	 * @param groupId
 	 */
-	public void updateUser(AdmUser user);
+	public void updateUser(String account, String password, String name, String email, String address, String tel, String phone, String groupId);
 	
 	/**
 	 * 啟用使用者	
@@ -88,6 +120,13 @@ public interface AuthService {
 	 * @param grpId
 	 */
 	public void unApproveGroup(String grpId);
+
+	/**
+	 * 查詢所有group
+	 * @param isEnabled
+	 * @param isApproved
+	 */
+	public List<AdmGroup> findAllGroup(boolean isEnabled, boolean isApproved);
 	
 	/**
 	 * 新增功能

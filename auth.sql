@@ -17,6 +17,7 @@ create table Adm_User(
 create table Adm_Group(
 	group_id		varchar(10) primary key,
 	group_name		varchar(10),
+	is_manager		bit(1),
 	create_date		datetime,
 	update_date		datetime,
 	isEnabled		bit(1),
@@ -44,8 +45,10 @@ create table Adm_Group_Func_Map (
 );
 
 insert into Adm_User values ('admin', '123456', '系統管理者', 'gauciouss@gmail.com', '', '', '', 'GRP0000001', now(), null, 1, 1);
-insert into Adm_Group values ('GRP0000001', '系統管理者', now(), null, 1, 1);
-insert into Adm_Func values ('FUN0000001', '權限管理', '', 1, '', 1, now(), null, 1, 1);
+insert into Adm_Group values ('GRP0000001', '系統管理者', 1, now(), null, 1, 1);
+insert into Adm_Group values ('GRP0000002', '管理者', 1, now(), null, 1, 1);
+insert into Adm_Group values ('GRP0000003', '使用者', now(), null, 1, 1);
+insert into Adm_Func values ('FUN0000001', '權限管理', 'FUN0000001', 1, '', 1, now(), null, 1, 1);
 insert into Adm_Func values ('FUN0000002', '使用者管理', 'FUN0000001', 0, 'auth/user/edit', 1, now(), null, 1, 1);
 insert into Adm_Func values ('FUN0000003', '群組管理', 'FUN0000001', 0, 'auth/grp/edit', 2, now(), null, 1, 1);
 insert into Adm_Func values ('FUN0000004', '功能管理', 'FUN0000001', 0, 'auth/func/edit', 3, now(), null, 1, 1);

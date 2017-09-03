@@ -24,6 +24,17 @@ public class AdmGroupDao extends HibernateDao<AdmGroup, String> {
 	private static final String SQL_UNAPPROVED_GROUP = "update Adm_Group set isApproved = false where group_id = ?";
 	
 	private static final String SQL_GET_MAX_ID = "select max(group_id) from Adm_Group";
+	private static final String HQL_FIND_ALL_GROUP = "from AdmGroup where isEnabled = ? and isApproved = ?";
+	
+	@SuppressWarnings("unchecked")
+	public List<AdmGroup> findAll(boolean isEnabled, boolean isApproved) {
+		Profiler p = new Profiler();
+		log.trace("START: {}.findAll(), isEnabled: {}, isApproved: {}", this.getClass(), isEnabled, isApproved);
+		List<AdmGroup> groups = (List<AdmGroup>) super.findByHql(HQL_FIND_ALL_GROUP, isEnabled, isApproved);
+		log.info("END: {}.findAll(), isEnabled: {}, isApproved: {}, groups: {}, exec TIME: {} ms.", this.getClass(), isEnabled, isApproved, groups, p.executeTime());
+		return groups;
+	}
+	
 	
 	
 	public void addNewGroup(String grpName) {
@@ -63,6 +74,7 @@ public class AdmGroupDao extends HibernateDao<AdmGroup, String> {
 	}
 	
 	
+	@SuppressWarnings("unchecked")
 	public String getNextId() {
 		Profiler p = new Profiler();
 		log.trace("START: {}.getNextId()");

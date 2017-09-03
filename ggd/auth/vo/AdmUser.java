@@ -28,6 +28,9 @@ public class AdmUser implements Serializable {
 	@Column(name = "pwd")
 	private String pwd;
 	
+	@Column(name = "name")
+	private String name;
+	
 	@Column(name = "email")
 	private String email;
 	
@@ -63,11 +66,12 @@ public class AdmUser implements Serializable {
 	public AdmUser() {}
 
 
-	public AdmUser(String account, String pwd, String email, String address, String tel, String phone,
+	public AdmUser(String account, String pwd, String name, String email, String address, String tel, String phone,
 			Timestamp createDate, Timestamp updateDate, boolean isEnabled, boolean isApproved, AdmGroup group) {
 		super();
 		this.account = account;
 		this.pwd = pwd;
+		this.name = name;
 		this.email = email;
 		this.address = address;
 		this.tel = tel;
@@ -200,6 +204,14 @@ public class AdmUser implements Serializable {
 	public void setFuncs(List<AdmFunc> funcs) {
 		this.funcs = funcs;
 	}
+	
+	public String getName() {
+		return name;
+	}
+	
+	public void setName(String name) {
+		this.name = name;
+	}
 
 
 	@Override
@@ -209,6 +221,8 @@ public class AdmUser implements Serializable {
 		builder.append(account);
 		builder.append(", pwd=");
 		builder.append(pwd);
+		builder.append(", name=");
+		builder.append(name);
 		builder.append(", email=");
 		builder.append(email);
 		builder.append(", address=");

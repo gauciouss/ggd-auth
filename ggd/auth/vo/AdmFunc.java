@@ -10,6 +10,8 @@ import javax.persistence.Entity;
 import javax.persistence.FetchType;
 import javax.persistence.Id;
 import javax.persistence.JoinColumn;
+import javax.persistence.JoinTable;
+import javax.persistence.ManyToMany;
 import javax.persistence.ManyToOne;
 import javax.persistence.OneToMany;
 import javax.persistence.Table;
@@ -27,12 +29,19 @@ public class AdmFunc implements Serializable {
 	@Column(name = "func_name")
 	private String funcName;
 	
-	@ManyToOne(cascade = CascadeType.ALL, fetch = FetchType.LAZY)
+	@ManyToOne(cascade = CascadeType.ALL, fetch = FetchType.EAGER)
 	@JoinColumn(name = "parent_id")
 	private AdmFunc parent;
 	
 	@OneToMany(fetch = FetchType.EAGER, cascade = CascadeType.ALL, mappedBy = "parent")	
 	private Set<AdmFunc> subs;
+	
+	@ManyToMany(fetch = FetchType.EAGER, cascade = CascadeType.ALL)
+	@JoinTable(name = "adm_group_func_map", joinColumns = {
+			@JoinColumn(name = "func_id", nullable = false, updatable = false) },
+			inverseJoinColumns = { @JoinColumn(name = "group_id",
+					nullable = false, updatable = false) })
+	private Set<AdmGroup> groups;
 	
 	@Column(name = "is_root")
 	private boolean isRoot;
@@ -54,6 +63,14 @@ public class AdmFunc implements Serializable {
 
 	@Column(name = "isApproved")
 	private boolean isApproved;
+
+	public Set<AdmGroup> getGroups() {
+		return groups;
+	}
+	
+	public void setGroups(Set<AdmGroup> groups) {
+		this.groups = groups;
+	}
 
 	public String getFuncId() {
 		return funcId;

@@ -15,6 +15,9 @@ public class AdmFuncDao extends HibernateDao<AdmFunc, String> {
 	private static final String SQL_DISABLE = "update Adm_Func set isEnabled = false, isApproved = false where func_id = ?";
 	private static final String SQL_APPROVED = "update Adm_Func set isApproved = true, isEnabled = true where func_id = ?";
 	private static final String SQL_UNAPPROVED = "update Adm_Func set isApproved = false where func_id = ?";
+			
+	
+	
 	
 	public void enable(String funcId, boolean isEnabled) {
 		Profiler p = new Profiler();

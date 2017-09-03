@@ -27,6 +27,9 @@ public class AdmGroup implements Serializable {
 
 	@Column(name = "group_name")
 	private String groupName;
+	
+	@Column(name = "is_manager")
+	private boolean isManager;
 
 	@Column(name = "create_date")
 	private Timestamp createDate;
@@ -40,16 +43,7 @@ public class AdmGroup implements Serializable {
 	@Column(name = "isApproved")
 	private boolean isApproved;
 
-	@ManyToMany(fetch = FetchType.EAGER, cascade = CascadeType.ALL)
-	@JoinTable(
-		name = "Adm_Group_Func_Map", 
-		joinColumns = {
-			@JoinColumn(name = "group_id", nullable = false, updatable = false)
-		}, 
-		inverseJoinColumns = {
-			@JoinColumn(name= "func_id", nullable = false, updatable = false)
-		}
-	)
+	@ManyToMany(fetch = FetchType.EAGER, mappedBy = "groups")
 	private Set<AdmFunc> funcs;
 
 	@OneToMany(fetch = FetchType.EAGER, cascade = CascadeType.ALL, mappedBy = "group")
@@ -58,15 +52,25 @@ public class AdmGroup implements Serializable {
 	public AdmGroup() {
 	}
 
-	public AdmGroup(String groupId, String groupName, Timestamp createDate, Timestamp updateDate, boolean isEnabled,
+	public AdmGroup(String groupId, String groupName, boolean isManager, Timestamp createDate, Timestamp updateDate, boolean isEnabled,
 			boolean isApproved) {
 		super();
 		this.groupId = groupId;
 		this.groupName = groupName;
+		this.isApproved = isManager;
 		this.createDate = createDate;
 		this.updateDate = updateDate;
 		this.isEnabled = isEnabled;
 		this.isApproved = isApproved;
+	}
+	
+
+	public void setManager(boolean isManager) {
+		this.isManager = isManager;
+	}
+	
+	public boolean isManager() {
+		return isManager;
 	}
 
 	public String getGroupId() {
