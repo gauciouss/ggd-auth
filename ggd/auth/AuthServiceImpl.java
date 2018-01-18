@@ -1,7 +1,5 @@
 package ggd.auth;
 
-import java.sql.Timestamp;
-import java.util.Calendar;
 import java.util.List;
 
 import org.slf4j.Logger;
