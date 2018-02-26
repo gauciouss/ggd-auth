@@ -1,5 +1,6 @@
 package ggd.auth.dao;
 
+import java.util.ArrayList;
 import java.util.List;
 
 import org.hibernate.Query;
@@ -25,7 +26,24 @@ public class AdmUserDao extends HibernateDao<AdmUser, String> {
 	private static final String HQL_FIND_USERS = "from AdmUser";
 	private static final String HQL_FIND_USERS_BY_ID_OR_NAME = "from AdmUser where account = ? or name like ?";
 	
-	private static final String SQL_UPDATE_USER = "update adm_user set pwd = ?, name = ?, email = ?, address = ?, tel = ?, phone = ?, group_id = ?, update_date = now() where account = ?";
+	//private static final String SQL_UPDATE_USER = "update adm_user set pwd = ?, name = ?, email = ?, address = ?, tel = ?, phone = ?, group_id = ?, update_date = now() where account = ?";
+	private static final String SQL_FIND_ALL_USER = "select * from adm_user";
+	
+	
+	public List<AdmUser> findUsers() {
+		Profiler p = new Profiler();
+		log.trace("START: {}.findUsers().", this.getClass());
+		List<AdmUser> users = super.findBySql(SQL_FIND_ALL_USER, AdmUser.class);
+		List<AdmUser> copy = new ArrayList<AdmUser>();
+		for(AdmUser user : users) {
+			log.debug("is copy contain user ? {}", copy.contains(user));
+			if(!copy.contains(user))
+				copy.add(user);
+		}
+		log.info("END: {}.findUsers(), exec TIME: {} ms.", this.getClass(), p.executeTime());
+		return copy;
+	}
+	
 	
 	@SuppressWarnings("unchecked")
 	public List<AdmUser> findUsers(String value) {

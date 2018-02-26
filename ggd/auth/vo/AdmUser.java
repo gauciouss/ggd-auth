@@ -4,14 +4,12 @@ import java.io.Serializable;
 import java.sql.Timestamp;
 import java.util.List;
 
-import javax.persistence.CascadeType;
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.FetchType;
 import javax.persistence.Id;
 import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
-import javax.persistence.OneToOne;
 import javax.persistence.Table;
 import javax.persistence.Transient;
 
@@ -55,8 +53,8 @@ public class AdmUser implements Serializable {
 	@Column(name = "isApproved")
 	private boolean isApproved;
 	
-	@ManyToOne(fetch = FetchType.EAGER, cascade = CascadeType.ALL)
-	@JoinColumn(name = "group_id")
+	@ManyToOne(fetch = FetchType.EAGER)
+	@JoinColumn(name = "group_id", insertable = false, updatable = false, unique = true)
 	private AdmGroup group;
 	
 	@Transient
@@ -214,6 +212,12 @@ public class AdmUser implements Serializable {
 	}
 
 
+	
+
+
+	/* (non-Javadoc)
+	 * @see java.lang.Object#toString()
+	 */
 	@Override
 	public String toString() {
 		StringBuilder builder = new StringBuilder();
@@ -239,6 +243,8 @@ public class AdmUser implements Serializable {
 		builder.append(isEnabled);
 		builder.append(", isApproved=");
 		builder.append(isApproved);
+		builder.append(", group=");
+		builder.append(group);
 		builder.append(", funcs=");
 		builder.append(funcs);
 		builder.append("]");
@@ -246,6 +252,9 @@ public class AdmUser implements Serializable {
 	}
 
 
+	/* (non-Javadoc)
+	 * @see java.lang.Object#hashCode()
+	 */
 	@Override
 	public int hashCode() {
 		final int prime = 31;
@@ -255,6 +264,9 @@ public class AdmUser implements Serializable {
 	}
 
 
+	/* (non-Javadoc)
+	 * @see java.lang.Object#equals(java.lang.Object)
+	 */
 	@Override
 	public boolean equals(Object obj) {
 		if (this == obj)

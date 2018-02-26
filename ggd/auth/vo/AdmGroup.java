@@ -4,13 +4,11 @@ import java.io.Serializable;
 import java.sql.Timestamp;
 import java.util.Set;
 
-import javax.persistence.CascadeType;
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.FetchType;
 import javax.persistence.Id;
 import javax.persistence.JoinColumn;
-import javax.persistence.JoinTable;
 import javax.persistence.ManyToMany;
 import javax.persistence.OneToMany;
 import javax.persistence.Table;
@@ -46,7 +44,8 @@ public class AdmGroup implements Serializable {
 	@ManyToMany(fetch = FetchType.EAGER, mappedBy = "groups")
 	private Set<AdmFunc> funcs;
 
-	@OneToMany(fetch = FetchType.EAGER, cascade = CascadeType.ALL, mappedBy = "group")
+	@OneToMany(fetch = FetchType.EAGER)
+	@JoinColumn(name = "account", insertable = false, updatable = false)
 	private Set<AdmUser> users;
 
 	public AdmGroup() {

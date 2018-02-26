@@ -44,13 +44,13 @@ public class AdmFunc implements Serializable {
 	private Set<AdmGroup> groups;
 	
 	@Column(name = "is_root")
-	private boolean isRoot;
+	private boolean isRoot = false;
 	
 	@Column(name = "url")
 	private String url;
 	
 	@Column(name = "sort")
-	private Integer sort;
+	private Integer sort = 0;
 	
 	@Column(name = "create_date")
 	private Timestamp createDate;
