@@ -5,7 +5,9 @@ import java.util.List;
 import org.springframework.transaction.annotation.Transactional;
 
 import ggd.auth.vo.AdmFunc;
+import ggd.auth.vo.AdmFuncEntity;
 import ggd.auth.vo.AdmGroup;
+import ggd.auth.vo.AdmGroupEntity;
 import ggd.auth.vo.AdmUser;
 
 @Transactional
@@ -160,6 +162,13 @@ public interface AuthService {
 	public List<AdmGroup> findAllGroup() throws AuthException;
 	
 	/**
+	 * 查詢所有group
+	 * @return
+	 * @throws AuthException
+	 */
+	public List<AdmGroupEntity> findAllGroupEntity() throws AuthException;
+	
+	/**
 	 * 查詢group
 	 * @param id
 	 * @return
@@ -177,6 +186,14 @@ public interface AuthService {
 	 * 查詢所有可執行功能功能
 	 */
 	public List<AdmFunc> findAllApprovedFunc() throws AuthException;
+	
+	/**
+	 * 查詢所有功能
+	 * @return
+	 * @throws AuthException
+	 */
+	public List<AdmFuncEntity> findAllFuncEntity() throws AuthException;
+	
 	/**
 	 * 查詢特定功能
 	 * @param id

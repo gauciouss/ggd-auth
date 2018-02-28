@@ -17,6 +17,7 @@ import baytony.util.Util;
 import ggd.auth.AuthException;
 import ggd.auth.AuthService;
 import ggd.auth.vo.AdmFunc;
+import ggd.auth.vo.AdmFuncEntity;
 import ggd.core.CoreException;
 import ggd.core.common.Constant;
 import ggd.core.dispatcher.Dispatcher;
@@ -121,9 +122,9 @@ public class FunctionDispatcher implements Dispatcher {
 	}
 	
 	private void doIndex(ModelAndView view, HttpServletRequest request) {		
-		List<AdmFunc> funcs = null;
+		List<AdmFuncEntity> funcs = null;
 		try {
-			funcs = service.findAllFunc(false);
+			funcs = service.findAllFuncEntity();
 			view.addObject(Constant.DATA_LIST, funcs);		
 			view.setViewName("func/index");
 		} catch (AuthException e) {

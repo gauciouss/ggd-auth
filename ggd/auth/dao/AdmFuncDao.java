@@ -8,6 +8,7 @@ import org.springframework.stereotype.Repository;
 
 import baytony.util.Profiler;
 import ggd.auth.vo.AdmFunc;
+import ggd.auth.vo.AdmFuncEntity;
 import ggd.core.db.HibernateDao;
 
 @Repository("AdmFuncDao")
@@ -24,6 +25,15 @@ public class AdmFuncDao extends HibernateDao<AdmFunc, String> {
 	private static final String SQL_UPDATE_FUNCTION = "update adm_func set func_name = ?, parent_id = ?, is_root = ?, sort = ?, url = ?, isEnabled = ?, isApproved = ?, update_date = now() where func_id = ?";
 	private static final String HQL_FIND_ALL_ROOT_FUNCTION = "from AdmFunc a where a.isRoot = true";
 	private static final String HQL_FIND_ALL_APPROVED = "from AdmFunc a where a.isEnabled = true and a.isApproved = true order by a.parent.funcId";
+	private static final String SQL_FIND_ALL_FUNCTION = "select func_id, func_name, isEnabled, isApproved from adm_func";
+	
+	public List<AdmFuncEntity> findAllFuncEntity() {
+		Profiler p = new Profiler();
+		log.trace("START: {}.findAllFuncEntity()", this.getClass());
+		List<AdmFuncEntity> list = super.findBySql(SQL_FIND_ALL_FUNCTION, AdmFuncEntity.class);
+		log.info("END: {}.findAllFuncEntity(), exec TIME: {} msl", this.getClass(), p.executeTime());
+		return list;
+	}
 	
 	@SuppressWarnings("unchecked")
 	public List<AdmFunc> findAllApprovedFunc() {

@@ -53,6 +53,9 @@ public class AdmUser implements Serializable {
 	@Column(name = "isApproved")
 	private boolean isApproved;
 	
+	@Column(name = "group_id")
+	private String groupId;
+	
 	@ManyToOne(fetch = FetchType.EAGER)
 	@JoinColumn(name = "group_id", insertable = false, updatable = false, unique = true)
 	private AdmGroup group;
@@ -65,7 +68,7 @@ public class AdmUser implements Serializable {
 
 
 	public AdmUser(String account, String pwd, String name, String email, String address, String tel, String phone,
-			Timestamp createDate, Timestamp updateDate, boolean isEnabled, boolean isApproved, AdmGroup group) {
+			Timestamp createDate, Timestamp updateDate, boolean isEnabled, boolean isApproved, String groupId) {
 		super();
 		this.account = account;
 		this.pwd = pwd;
@@ -78,7 +81,7 @@ public class AdmUser implements Serializable {
 		this.updateDate = updateDate;
 		this.isEnabled = isEnabled;
 		this.isApproved = isApproved;
-		this.group = group;
+		this.groupId = groupId;
 	}
 	
 	
@@ -211,11 +214,19 @@ public class AdmUser implements Serializable {
 		this.name = name;
 	}
 
+public String getGroupId() {
+	return groupId;
+}
 
+public void setGroupId(String groupId) {
+	this.groupId = groupId;
+}
 	
 
 
-	/* (non-Javadoc)
+	/*
+	 * (non-Javadoc)
+	 * 
 	 * @see java.lang.Object#toString()
 	 */
 	@Override
@@ -243,6 +254,8 @@ public class AdmUser implements Serializable {
 		builder.append(isEnabled);
 		builder.append(", isApproved=");
 		builder.append(isApproved);
+		builder.append(", groupId=");
+		builder.append(groupId);
 		builder.append(", group=");
 		builder.append(group);
 		builder.append(", funcs=");

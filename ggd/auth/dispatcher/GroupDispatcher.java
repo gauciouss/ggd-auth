@@ -23,6 +23,7 @@ import ggd.auth.AuthException;
 import ggd.auth.AuthService;
 import ggd.auth.vo.AdmFunc;
 import ggd.auth.vo.AdmGroup;
+import ggd.auth.vo.AdmGroupEntity;
 import ggd.core.CoreException;
 import ggd.core.common.Constant;
 import ggd.core.dispatcher.Dispatcher;
@@ -147,9 +148,9 @@ public class GroupDispatcher implements Dispatcher {
 	}
 	
 	private void doIndex(ModelAndView view, HttpServletRequest request) {		
-		List<AdmGroup> grps = null;
+		List<AdmGroupEntity> grps = null;
 		try {
-			grps = service.findAllGroup();
+			grps = service.findAllGroupEntity();
 			view.addObject(Constant.DATA_LIST, grps);		
 			view.setViewName("grp/index");
 		} catch (AuthException e) {

@@ -15,7 +15,9 @@ import ggd.auth.dao.AdmFuncDao;
 import ggd.auth.dao.AdmGroupDao;
 import ggd.auth.dao.AdmUserDao;
 import ggd.auth.vo.AdmFunc;
+import ggd.auth.vo.AdmFuncEntity;
 import ggd.auth.vo.AdmGroup;
+import ggd.auth.vo.AdmGroupEntity;
 import ggd.auth.vo.AdmUser;
 
 @Service("AuthService")
@@ -106,10 +108,7 @@ public class AuthServiceImpl implements AuthService {
 		user.setName(name);
 		user.setPhone(phone);
 		user.setTel(tel);
-		if(!groupId.equals(user.getGroup().getGroupId())) {
-			AdmGroup group = admGroupDao.findById(groupId);
-			user.setGroup(group);
-		}
+		user.setGroupId(groupId);
 		admUserDao.update(user);
 		log.info("END: {}.updateUser(), update user: {}, exec TIME: {} ms.", this.getClass(), user, p.executeTime());
 	}
@@ -129,10 +128,7 @@ public class AuthServiceImpl implements AuthService {
 		user.setTel(tel);
 		user.setEnabled(isEnabled);
 		user.setApproved(isApproved);
-		if(!groupId.equals(user.getGroup().getGroupId())) {
-			AdmGroup group = admGroupDao.findById(groupId);
-			user.setGroup(group);
-		}
+		user.setGroupId(groupId);
 		admUserDao.update(user);
 		log.info("END: {}.updateUser(), update user: {}, exec TIME: {} ms.", this.getClass(), user, p.executeTime());
 	}
@@ -231,7 +227,16 @@ public class AuthServiceImpl implements AuthService {
 	public List<AdmGroup> findAllGroup() throws AuthException {
 		Profiler p = new Profiler();
 		log.trace("START: {}.findAllGroup()", this.getClass());
-		List<AdmGroup> groups = (List<AdmGroup>) admGroupDao.findAllByHQL();
+		List<AdmGroup> groups = (List<AdmGroup>) admGroupDao.findAll();
+		log.info("END: {}.findAllGroup(), groups: {}, exec TIME: {} ms.", this.getClass(), groups, p.executeTime());
+		return groups;
+	}
+	
+	@Override
+	public List<AdmGroupEntity> findAllGroupEntity() throws AuthException {
+		Profiler p = new Profiler();
+		log.trace("START: {}.findAllGroup()", this.getClass());
+		List<AdmGroupEntity> groups = admGroupDao.findAllEntity();
 		log.info("END: {}.findAllGroup(), groups: {}, exec TIME: {} ms.", this.getClass(), groups, p.executeTime());
 		return groups;
 	}
@@ -277,6 +282,16 @@ public class AuthServiceImpl implements AuthService {
 		log.trace("START: {}.findAllFunc(), rootOnly: {}", this.getClass(), rootOnly);
 		List<AdmFunc> list = rootOnly ? admFuncDao.findAllRootFunc() : admFuncDao.findAll();
 		log.info("END: {}.findAllFunc(), rootOnly: {}, list: {}, exec TIME: {} ms.", this.getClass(), rootOnly, list, p.executeTime());
+		return list;
+	}
+	
+	@Override
+	public List<AdmFuncEntity> findAllFuncEntity() throws AuthException {
+		Profiler p = new Profiler();
+		log.trace("START: {}.findAllFunc()", this.getClass());
+		List<AdmFuncEntity> list = admFuncDao.findAllFuncEntity();
+		log.debug("function entities: {}", list);
+		log.info("END: {}.findAllFunc(), exec TIME: {} ms.", this.getClass(), p.executeTime());
 		return list;
 	}
 	

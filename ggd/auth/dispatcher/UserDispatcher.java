@@ -34,9 +34,6 @@ public class UserDispatcher implements Dispatcher {
 	@Qualifier("AuthService")
 	private AuthService service;
 	
-	@Autowired
-	@Qualifier("DEFAULT_PAGE_SIZE")
-	private Integer defaultPageSize;
 
 	@Override
 	public void handler(ModelAndView view, HttpServletRequest request) throws CoreException {
@@ -81,7 +78,7 @@ public class UserDispatcher implements Dispatcher {
 		try {
 			AdmUser user = service.findUserById(account);
 			if(user == null) {
-				service.addUser(new AdmUser(account, password, name, email, address, tel, phone, new Timestamp(System.currentTimeMillis()), null, Integer.parseInt(isEnabled) == 1, Integer.parseInt(isApproved) == 1, service.findGroup(group)));
+				service.addUser(new AdmUser(account, password, name, email, address, tel, phone, new Timestamp(System.currentTimeMillis()), null, Integer.parseInt(isEnabled) == 1, Integer.parseInt(isApproved) == 1, group));
 			}
 			else {
 				service.updateUser(account, password, name, email, address, tel, phone, group, Integer.parseInt(isEnabled) == 1, Integer.parseInt(isApproved) == 1);

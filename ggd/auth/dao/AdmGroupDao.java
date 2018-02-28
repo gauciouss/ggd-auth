@@ -8,6 +8,7 @@ import org.springframework.stereotype.Repository;
 
 import baytony.util.Profiler;
 import ggd.auth.vo.AdmGroup;
+import ggd.auth.vo.AdmGroupEntity;
 import ggd.core.db.HibernateDao;
 
 @Repository("AdmGroupDao")
@@ -23,13 +24,18 @@ public class AdmGroupDao extends HibernateDao<AdmGroup, String> {
 	private static final String SQL_APPROVED_GROUP = "update Adm_Group set isApproved = true, isEnabled = true where group_id = ?";
 	private static final String SQL_UNAPPROVED_GROUP = "update Adm_Group set isApproved = false where group_id = ?";
 	private static final String SQL_GET_MAX_ID = "select max(group_id) from Adm_Group";
-	private static final String HQL_FIND_ALL_GROUP = "from AdmGroup where isEnabled = ? and isApproved = ?";
-	private static final String HQL_FIND_ALL_GROUP2 = "from AdmGroup";
-	
-	
-	
+	private static final String HQL_FIND_ALL_GROUP = "from AdmGroup where isEnabled = ? and isApproved = ?";	
 	private static final String SQL_REMOVE_ALL_GROUP_FUNC = "delete from adm_group_func_map where group_id = ?";
 	private static final String SQL_ADD_FUNC_TO_GROUP = "insert into adm_group_func_map(group_id, func_id) values (?, ?)";
+	private static final String SQL_FIND_ALL_GROUP = "select group_id, group_name, isEnabled, isApproved from adm_group";
+	
+	public List<AdmGroupEntity> findAllEntity() {
+		Profiler p = new Profiler();
+		log.trace("START: {}.findAllEntity()", this.getClass());
+		List<AdmGroupEntity> groups =  super.findBySql(SQL_FIND_ALL_GROUP, AdmGroupEntity.class);
+		log.info("END: {}.findAllEntity(), exec TIME: {} ms.", this.getClass(), p.executeTime());
+		return groups;
+	}
 	
 	
 	public void addFunc2Group(String grpId, String funcId) {
@@ -44,16 +50,6 @@ public class AdmGroupDao extends HibernateDao<AdmGroup, String> {
 		log.trace("START: {}.removeAllFunc(), grpId: {}", this.getClass(), grpId);
 		super.executeUpateQuery(SQL_REMOVE_ALL_GROUP_FUNC, grpId);
 		log.info("END: {}.removeAllFunc(), grpId: {}, exec TIME: {} ms.", this.getClass(), grpId, p.executeTime());
-	}
-	
-	
-	@SuppressWarnings("unchecked")
-	public List<AdmGroup> findAllByHQL() {
-		Profiler p = new Profiler();
-		log.trace("START: {}.findAll()", this.getClass());
-		List<AdmGroup> groups = (List<AdmGroup>) super.findByHql(HQL_FIND_ALL_GROUP2);
-		log.info("END: {}.findAll(), groups: {}, exec TIME: {} ms.", this.getClass(), groups, p.executeTime());
-		return groups;
 	}
 	
 	
