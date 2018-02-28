@@ -44,7 +44,6 @@ public class AuthServiceImpl implements AuthService {
 		AdmUser user = admUserDao.getApprovedUser(account);
 		log.debug("authenticate user: {}", user);
 		if(user != null && !StringUtil.isEmptyString(pwd) && pwd.equals(user.getPwd())) {
-			
 			log.info("END: {}.authenticate(), account: {}, pwd: {}, exec TIME: {} ms.", this.getClass(), account, pwd, p.executeTime());
 			return user;
 		}
