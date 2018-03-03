@@ -17,7 +17,7 @@ import javax.persistence.OneToMany;
 import javax.persistence.Table;
 
 @Entity
-@Table(name = "Adm_Func")
+@Table(name = "adm_func")
 public class AdmFunc implements Serializable {
 
 	private static final long serialVersionUID = 1177345812549686781L;
