@@ -17,13 +17,13 @@ public class AdmGroupDao extends HibernateDao<AdmGroup, String> {
 	private final static Logger log = LoggerFactory.getLogger(AdmGroupDao.class);
 
 	
-	private static final String SQL_ADD_NEW_GROUP = "insert into Adm_Group(group_id, group_name, is_Manager, create_date, isEnabled, isApproved) values (?, ?, ?, now(), ?, ?)";
-	private static final String SQL_UPDATE_GROUP = "update Adm_Group set group_name = ?, update_date = now(), isEnabled = ? and isApproved = ? where group_id = ?";
-	private static final String SQL_ENABLE_GROUP = "update Adm_Group set isEnabled = true, isApproved = false where group_id = ?";
-	private static final String SQL_DISABLE_GROUP = "update Adm_Group set isEnabled = false, isApproved = false where group_id = ?";
-	private static final String SQL_APPROVED_GROUP = "update Adm_Group set isApproved = true, isEnabled = true where group_id = ?";
-	private static final String SQL_UNAPPROVED_GROUP = "update Adm_Group set isApproved = false where group_id = ?";
-	private static final String SQL_GET_MAX_ID = "select max(group_id) from Adm_Group";
+	private static final String SQL_ADD_NEW_GROUP = "insert into adm_group(group_id, group_name, is_Manager, create_date, isEnabled, isApproved) values (?, ?, ?, now(), ?, ?)";
+	private static final String SQL_UPDATE_GROUP = "update adm_group set group_name = ?, update_date = now(), isEnabled = ? and isApproved = ? where group_id = ?";
+	private static final String SQL_ENABLE_GROUP = "update adm_group set isEnabled = true, isApproved = false where group_id = ?";
+	private static final String SQL_DISABLE_GROUP = "update adm_group set isEnabled = false, isApproved = false where group_id = ?";
+	private static final String SQL_APPROVED_GROUP = "update adm_group set isApproved = true, isEnabled = true where group_id = ?";
+	private static final String SQL_UNAPPROVED_GROUP = "update adm_group set isApproved = false where group_id = ?";
+	private static final String SQL_GET_MAX_ID = "select max(group_id) from adm_group";
 	private static final String HQL_FIND_ALL_GROUP = "from AdmGroup where isEnabled = ? and isApproved = ?";	
 	private static final String SQL_REMOVE_ALL_GROUP_FUNC = "delete from adm_group_func_map where group_id = ?";
 	private static final String SQL_ADD_FUNC_TO_GROUP = "insert into adm_group_func_map(group_id, func_id) values (?, ?)";
